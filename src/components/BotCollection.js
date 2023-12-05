@@ -3,16 +3,18 @@ import BotCard from "./BotCard";
 
 function BotCollection({ onAddToArmy, onDischarge }) {
   const [bots, setBots] = useState([]);
-  // Your code here
+
   useEffect(() => {
     fetch("http://localhost:8002/bots")
       .then((response) => response.json())
       .then((data) => setBots(data))
       .catch((error) => console.error("Error fetching bots:", error));
-  }, [bots]);
+  }, []);
+
   const handleSelectBot = (bot) => {
-    setBots(bot);
+    onAddToArmy(bot);
   };
+
   return (
     <div className="ui four column grid">
       <div className="row">
@@ -24,7 +26,7 @@ function BotCollection({ onAddToArmy, onDischarge }) {
             bot={bot}
             onAddToArmy={() => onAddToArmy(bot)}
             onDischarge={() => onDischarge(bot)}
-            onSelect={handleSelectBot}
+            onSelect={() => handleSelectBot(bot)} 
           />
         ))}
       </div>

@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from "react";
+import React, { useEffect, useState } from "react";
 
 const botTypeClasses = {
   Assault: "icon military",
@@ -9,25 +9,30 @@ const botTypeClasses = {
   Captain: "icon star",
 };
 
-function BotCard({ bot, onAddToArmy, onDischarge }) {
+function BotCard({ bot, onAddToArmy, onDischarge, onSelect }) {
+  const [isSelected, setIsSelected] = useState(false);
+
   const handleAddToArmy = (event) => {
-    event.stopPropagation();  
+    event.stopPropagation();
     onAddToArmy(bot);
   };
 
   const handleDischarge = (event) => {
-    event.stopPropagation(); 
+    event.stopPropagation();
     onDischarge(bot);
   };
 
-  
+  const handleClick = () => {
+    onSelect && onSelect(bot);
+    setIsSelected(!isSelected);
+  };
+
   return (
     <div className="ui column">
       <div
-        className="ui card"
+        className={`ui card ${isSelected ? "selected" : ""}`}
         key={bot.id}
-        onClick={() => handleAddToArmy
-        }
+        onClick={handleClick} 
       >
         <div className="image">
           <img alt="oh no!" src={bot.avatar_url} />
